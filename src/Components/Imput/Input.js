@@ -1,3 +1,5 @@
+import { ErrorMessage } from 'formik';
+
 export const Input = ({
   name,
   type,
@@ -19,7 +21,11 @@ export const Input = ({
         required={required}
       />
 
-      {error && <span className="py-2 text-red-600 font-bold">{error}</span>}
+      <ErrorMessage
+        name={name}
+        component="span"
+        className="text-red-600 my-1"
+      />
     </div>
   );
 };

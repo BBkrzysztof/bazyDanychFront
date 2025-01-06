@@ -7,12 +7,20 @@ import Loader from '../Components/Loader/Loader';
 import axios from '../Api/ApiConfig';
 import useUser from '../Hooks/UseUser';
 import { toast } from 'react-toastify';
+import * as Yup from 'yup';
 
 export const Login = () => {
   const initialValues = {
     email: '',
     password: '',
   };
+
+  const validationSchema = Yup.object({
+    password: Yup.string().required('Password is required'),
+    email: Yup.string()
+      .email('Email is incorrect')
+      .required('Email is required'),
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +56,11 @@ export const Login = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <Formik initialValues={initialValues} onSubmit={onSubmit}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
             {({ setFieldValue, isSubmitting }) => {
               return (
                 <Form className="flex flex-col h-full ">
