@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: Inter, system-ui, sans-serif;
+    }
+
+    h1 {
+        @apply text-5xl font-bold;
+    }
+
+    h2 {
+        @apply text-4xl font-bold;
+    }
+
+    h3 {
+        @apply text-3xl font-bold;
+    }
+
+    h4 {
+        @apply text-2xl font-bold;
+    }
+
+    h5 {
+        @apply text-xl font-bold;
+    }
+
+    h6 {
+        @apply text-lg font-bold;
+    }
+
+    hr {
+        @apply border-t border-slate-200;
+    }
+
+    p + p {
+        margin-top: 0;
+    }
+
+    .user-drag-none {
+        -webkit-user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+}

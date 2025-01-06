@@ -7,10 +7,12 @@
     "axios-hooks": "^5.1.0",
     "cra-template": "1.2.0",
     "formik": "^2.4.6",
+    "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "tailwind-merge": "^2.6.0",
     "yup": "^1.6.1"
   },
   "scripts": {
