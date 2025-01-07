@@ -29,7 +29,7 @@ export const useUser = () => {
 
   const isAuthenticated = useMemo(
     () => JSON.parse(localStorage.getItem('user')) != null,
-    [user]
+    []
   );
 
   return { user, isAuthenticated, login, logout };
