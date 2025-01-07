@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import useUser from '../../Hooks/UseUser';
 
-export const ProtectedRoute = () => {
+export const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useUser();
 
@@ -11,6 +11,8 @@ export const ProtectedRoute = () => {
       navigate('/login');
     }
   }, [navigate, isAuthenticated]);
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

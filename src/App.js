@@ -15,11 +15,11 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="reset-password" element={<ResetPassword />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/list" element={<Loader />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="reset-password" element={<ResetPassword />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />
