@@ -1,20 +1,22 @@
 import { Input } from '../Components/Imput/Input';
 import { Form, Formik } from 'formik';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../Components/Button/Button';
 import Loader from '../Components/Loader/Loader';
 import axios from '../Api/ApiConfig';
-import useUser from '../Hooks/UseUser';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import ParseApiError from '../Api/ParseError';
 
 export const Register = () => {
-  const initialValues = {
-    email: '',
-    password: '',
-  };
-
+  const initialValues = useMemo(
+    () => ({
+      email: '',
+      password: '',
+    }),
+    []
+  );
   const validationSchema = Yup.object({
     password: Yup.string().required('Password is required'),
     email: Yup.string()
@@ -25,45 +27,49 @@ export const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { login } = useUser();
   const navigate = useNavigate();
 
   const onSubmit = useCallback(
-    async (data, { setSubmitting }) => {
+    async (data, { setSubmitting, setFieldError }) => {
       setIsLoading(true);
       setError('');
       try {
-        const result = await axios.post('/api/register', JSON.stringify(data));
-        toast('Account created successfully!');
+        await axios.post('/api/register', JSON.stringify(data));
+        toast('Account created successfully!', { type: 'success' });
         navigate('/login');
+        setIsLoading(false);
       } catch (e) {
         toast('Something went wrong!', { type: 'error' });
+        setIsLoading(false);
 
         if (e.status === 401) {
           setError(e.response.data.data);
         }
+        if (e.status === 400) {
+          ParseApiError(e.response, setFieldError);
+        }
       } finally {
-        setIsLoading(false);
         setSubmitting(false);
       }
     },
-    [login]
+    [navigate]
   );
 
   return (
     <div className="flex w-full h-[100vh] justify-center items-center bg-[#f3f4f7]">
-      <div className="w-1/4 p-5 h-[50vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
+      <div className="w-1/4 p-5 h-[60vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
         <h5 className="">Create new account</h5>
         <span className="">Please enter your details to register</span>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {({ setFieldValue, isSubmitting }) => {
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {isLoading ? (
+            <Loader />
+          ) : (
+            ({ setFieldValue, isSubmitting }) => {
               return (
                 <Form className="flex flex-col h-full ">
                   <Input
@@ -92,9 +98,9 @@ export const Register = () => {
                   </span>
                 </Form>
               );
-            }}
-          </Formik>
-        )}
+            }
+          )}
+        </Formik>
       </div>
     </div>
   );

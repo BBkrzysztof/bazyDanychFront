@@ -8,6 +8,7 @@ import axios from '../Api/ApiConfig';
 import useUser from '../Hooks/UseUser';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
+import ParseApiError from '../Api/ParseError';
 
 export const Login = () => {
   const initialValues = {
@@ -28,7 +29,7 @@ export const Login = () => {
   const { login } = useUser();
 
   const onSubmit = useCallback(
-    async (data, { setSubmitting }) => {
+    async (data, { setSubmitting, setFieldError }) => {
       setIsLoading(true);
       setError('');
       try {
@@ -40,6 +41,10 @@ export const Login = () => {
         if (e.status === 401) {
           setError(e.response.data.data);
         }
+
+        if (e.status === 400) {
+          ParseApiError(e.response, setFieldError);
+        }
       } finally {
         setIsLoading(false);
         setSubmitting(false);
@@ -50,18 +55,18 @@ export const Login = () => {
 
   return (
     <div className="flex w-full h-[100vh] justify-center items-center bg-[#f3f4f7]">
-      <div className="w-1/4 p-5 h-[50vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
+      <div className="w-1/4 p-5 h-[60vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
         <h5 className="">Welcome back</h5>
         <span className="">Please enter your details to sing in</span>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {({ setFieldValue, isSubmitting }) => {
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {isLoading ? (
+            <Loader />
+          ) : (
+            ({ setFieldValue, isSubmitting }) => {
               return (
                 <Form className="flex flex-col h-full ">
                   <Input
@@ -90,9 +95,9 @@ export const Login = () => {
                   </span>
                 </Form>
               );
-            }}
-          </Formik>
-        )}
+            }
+          )}
+        </Formik>
       </div>
     </div>
   );
