@@ -1,7 +1,7 @@
 import { Input } from '../Components/Imput/Input';
 import { Form, Formik } from 'formik';
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../Components/Button/Button';
 import Loader from '../Components/Loader/Loader';
 import axios from '../Api/ApiConfig';
@@ -11,6 +11,8 @@ import * as Yup from 'yup';
 import ParseApiError from '../Api/ParseError';
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const initialValues = {
     email: '',
     password: '',
@@ -35,6 +37,7 @@ export const Login = () => {
       try {
         const result = await axios.post('/api/login', JSON.stringify(data));
         login(result.data);
+        navigate('/');
       } catch (e) {
         toast('Something went wrong!', { type: 'error' });
 

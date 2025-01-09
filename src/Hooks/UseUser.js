@@ -1,36 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import useLocalStorageState from 'use-local-storage-state';
 
 export const useUser = () => {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
+  const [user, setUser, { removeItem }] = useLocalStorageState('user');
 
   const login = useCallback(
     (userData) => {
       setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
-      navigate('/');
     },
-    [setUser, navigate]
+    [user]
   );
 
   const logout = useCallback(() => {
-    setUser(null);
-    localStorage.removeItem('user');
-    navigate('/');
-  }, [setUser, navigate]);
+    removeItem();
+  }, []);
 
-  const isAuthenticated = useMemo(
-    () => JSON.parse(localStorage.getItem('user')) != null,
-    []
-  );
+  const isAuthenticated = useMemo(() => !!user, [user]);
 
   return { user, isAuthenticated, login, logout };
 };

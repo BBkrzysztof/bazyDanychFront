@@ -8,23 +8,27 @@ import Loader from './Components/Loader/Loader';
 import Logout from './Pages/Logout';
 import { ToastContainer } from 'react-toastify';
 import Main from './Pages/Main';
+import Navbar from './Components/Navbar/Navbar';
+import Layout from './Layout/Layout';
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route element={<ProtectedRoute />}>
-            <Route path="/list" element={<Loader />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="reset-password" element={<ResetPassword />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/list" element={<Loader />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+            </Route>
+
+            <Route path="*" element={<NotFound />} />
           </Route>
-
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
       <ToastContainer />
