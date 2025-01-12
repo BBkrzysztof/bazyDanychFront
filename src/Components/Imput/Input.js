@@ -1,15 +1,16 @@
 import { ErrorMessage } from 'formik';
+import { twMerge } from 'tailwind-merge';
 
 export const Input = ({
   name,
   type,
   label,
-  error,
+  error = true,
   required = false,
   onChange = () => {},
 }) => {
   return (
-    <div className="my-4 flex flex-col">
+    <div className={twMerge(' flex flex-col', error ? 'my-4' : '')}>
       <input
         className={
           'border-gray-500 rounded-md border py-1 px-3 focus:outline-purple-500'
@@ -21,11 +22,13 @@ export const Input = ({
         required={required}
       />
 
-      <ErrorMessage
-        name={name}
-        component="span"
-        className="text-red-600 my-1"
-      />
+      {error && (
+        <ErrorMessage
+          name={name}
+          component="span"
+          className="text-red-600 my-1"
+        />
+      )}
     </div>
   );
 };

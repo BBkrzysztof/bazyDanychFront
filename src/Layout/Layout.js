@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 export const Layout = ({ children }) => {
   return (
-    <div className="bg-[#f3f4f7] h-[100vh]">
+    <div className="bg-[#f3f4f7] h-fit">
       <Navbar />
       {children ? children : <Outlet />}
     </div>
