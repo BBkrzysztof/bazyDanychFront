@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 export const useUser = () => {
@@ -8,12 +8,12 @@ export const useUser = () => {
     (userData) => {
       setUser(userData);
     },
-    [user]
+    [setUser]
   );
 
   const logout = useCallback(() => {
     removeItem();
-  }, []);
+  }, [removeItem]);
 
   const isAuthenticated = useMemo(() => !!user, [user]);
 

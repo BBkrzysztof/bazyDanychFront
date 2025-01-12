@@ -4,15 +4,14 @@ import useUser from '../../Hooks/UseUser';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
-export const Navbar = ({}) => {
+export const Navbar = () => {
   const { user, isAuthenticated } = useUser();
 
   const menuItems = useMemo(() => {
-    console.log(isAuthenticated);
     if (!isAuthenticated) {
       return [
         {
-          url: '/tickets',
+          url: '/',
           label: 'Tickets',
         },
         {
@@ -28,7 +27,7 @@ export const Navbar = ({}) => {
 
     return [
       {
-        url: '/tickets',
+        url: '/',
         label: 'Tickets',
         roles: [],
       },
@@ -87,6 +86,8 @@ export const Navbar = ({}) => {
               </Link>
             );
           }
+
+          return <></>;
         })}
       </div>
     </nav>

@@ -8,8 +8,8 @@ import Loader from './Components/Loader/Loader';
 import Logout from './Pages/Logout';
 import { ToastContainer } from 'react-toastify';
 import Main from './Pages/Main';
-import Navbar from './Components/Navbar/Navbar';
 import Layout from './Layout/Layout';
+import SingleTicket from './Pages/SingleTicket';
 
 function App() {
   return (
@@ -18,6 +18,8 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Main />} />
+            <Route path="/ticket/:id" element={<SingleTicket />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 

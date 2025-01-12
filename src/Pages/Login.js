@@ -53,7 +53,7 @@ export const Login = () => {
         setSubmitting(false);
       }
     },
-    [login]
+    [login, navigate]
   );
 
   return (
