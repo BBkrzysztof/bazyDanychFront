@@ -7,14 +7,28 @@ import { faTicket } from '@fortawesome/free-solid-svg-icons';
 import Pill from '../Components/Pill/Pill';
 import moment from 'moment';
 import CommentCard from '../Components/CommentCard/CommentCard';
+import CommentForm from '../Components/CommentForm/CommentForm';
+import { useEffect, useMemo, useState } from 'react';
+import useUser from '../Hooks/UseUser';
 
 export const SingleTicket = () => {
   const { id } = useParams();
   const { state } = useLocation();
+  const { isAuthenticated } = useUser();
 
-  const [{ data: comments, loading, error }] = useAxios(`/api/comment/${id}`);
+  const [comments, setComments] = useState([]);
 
-  //@todo single ticket page
+  const [{ data, loading, error }] = useAxios(`/api/comment/${id}`);
+
+  useEffect(() => {
+    setComments(data);
+  }, [data]);
+
+  const createComment = useMemo(() => {
+    if (!isAuthenticated) return;
+
+    return <CommentForm id={state.id} setComments={setComments} />;
+  }, [isAuthenticated, state]);
 
   return (
     <LoaderWrapper loading={loading}>
@@ -34,7 +48,7 @@ export const SingleTicket = () => {
               </div>
               <div className="grid grid-cols-2 py-5 px-1">
                 <div className="flex gap-1 items-center">
-                  <spa className="text-gray-600 font-semibold">Tags: </spa>
+                  <span className="text-gray-600 font-semibold">Tags: </span>
                   {state.tags?.map((tag) => (
                     <Pill pillStyle="green" key={`status-pill-${id}-${tag.id}`}>
                       {tag.name}
@@ -73,9 +87,11 @@ export const SingleTicket = () => {
               <hr className="px-10 my-5 border-gray-500" />
               <span className="text-gray-600 font-bold">Discussion:</span>
               <div className="flex flex-col p-2 gap-2">
+                {createComment}
                 {comments?.map((comment) => (
                   <CommentCard
                     {...comment}
+                    setComments={setComments}
                     key={`${comment.id}-comment-card`}
                   />
                 ))}

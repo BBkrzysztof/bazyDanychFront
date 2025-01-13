@@ -34,7 +34,7 @@ export const Main = () => {
   }, [data]);
 
   return (
-    <div className="mx-auto w-2/3 min-h-[700px]">
+    <div className="mx-auto w-2/3">
       <div className="p-5 border border-gray-500 flex justify-center gap-2">
         {filtersComponent}
       </div>
@@ -45,7 +45,7 @@ export const Main = () => {
           </div>
         </LoaderWrapper>
       </ErrorWrapper>
-      <div className="">{pagination}</div>
+      <div>{pagination}</div>
     </div>
   );
 };
