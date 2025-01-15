@@ -15,7 +15,7 @@ export const AddWorkTime = ({ mode = 'add' }) => {
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [workTimes, setWorkTimes] = useState([]);
-  const [currentWorkTime, setCurrentWorkTime] = useState([]);
+  const [currentWorkTime, setCurrentWorkTime] = useState({});
 
   const [{ data, loading, error }] = useAxios({
     url: `/api/work-time?ticket=${mode === 'add' ? id : state.ticket.id}`,
@@ -29,7 +29,7 @@ export const AddWorkTime = ({ mode = 'add' }) => {
   }, [data]);
 
   useEffect(() => {
-    setCurrentWorkTime(state);
+    setCurrentWorkTime(state || {});
   }, [state]);
 
   const handleDelete = useCallback(async (id) => {

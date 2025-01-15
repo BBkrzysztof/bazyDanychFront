@@ -64,7 +64,7 @@ export const CommentForm = ({
           className="w-full h-full resize-none focus:outline-none p-1"
           placeholder="Comment ..."
           onChange={(event) => setCommentContent(event.target.value)}
-          value={comment}
+          value={commentContent}
         ></textarea>
       </LoaderWrapper>
     </div>

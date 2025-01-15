@@ -13,6 +13,8 @@ import SingleTicket from './Pages/SingleTicket';
 import CreateTicket from './Pages/CreateTicket';
 import EditTicket from './Pages/EditTicket';
 import AddWorkTime from './Pages/AddWorkTime';
+import WorkTime from './Pages/WorkTime';
+import ProtectedRoleRoute from './Pages/ProtectedRoute/ProtectedRoleRoute';
 
 function App() {
   return (
@@ -22,18 +24,26 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Main />} />
             <Route path="/ticket/:id" element={<SingleTicket />} />
-            <Route path="/work-time/add/:id" element={<AddWorkTime />} />
-            <Route
-              path="/work-time/edit/:id"
-              element={<AddWorkTime mode="edit" />}
-            />
-            <Route path="/ticket/add" element={<CreateTicket />} />
-            <Route path="/ticket/edit/:id" element={<EditTicket />} />
-
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
             <Route element={<ProtectedRoute />}>
+              <Route path="/ticket/add" element={<CreateTicket />} />
+              <Route path="/ticket/edit/:id" element={<EditTicket />} />
+
+              <Route
+                element={
+                  <ProtectedRoleRoute roles={['RoleAdmin', 'RoleEmployee']} />
+                }
+              >
+                <Route path="/work-time/add/:id" element={<AddWorkTime />} />
+                <Route path="/work-time/" element={<WorkTime />} />
+                <Route
+                  path="/work-time/edit/:id"
+                  element={<AddWorkTime mode="edit" />}
+                />
+              </Route>
+
               <Route path="/list" element={<Loader />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="reset-password" element={<ResetPassword />} />
