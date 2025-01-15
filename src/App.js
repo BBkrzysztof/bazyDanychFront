@@ -12,6 +12,7 @@ import Layout from './Layout/Layout';
 import SingleTicket from './Pages/SingleTicket';
 import CreateTicket from './Pages/CreateTicket';
 import EditTicket from './Pages/EditTicket';
+import AddWorkTime from './Pages/AddWorkTime';
 
 function App() {
   return (
@@ -21,6 +22,11 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Main />} />
             <Route path="/ticket/:id" element={<SingleTicket />} />
+            <Route path="/work-time/add/:id" element={<AddWorkTime />} />
+            <Route
+              path="/work-time/edit/:id"
+              element={<AddWorkTime mode="edit" />}
+            />
             <Route path="/ticket/add" element={<CreateTicket />} />
             <Route path="/ticket/edit/:id" element={<EditTicket />} />
 

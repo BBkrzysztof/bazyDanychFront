@@ -9,6 +9,7 @@ export const Input = ({
   error = true,
   required = false,
   onChange = () => {},
+  props,
 }) => {
   return (
     <div className={twMerge(' flex flex-col', error ? 'my-4' : '')}>
@@ -22,6 +23,7 @@ export const Input = ({
         onChange={(event) => onChange(event.target.value)}
         placeholder={label}
         required={required}
+        {...props}
       />
 
       {error && (

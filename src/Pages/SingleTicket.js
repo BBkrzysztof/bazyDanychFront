@@ -127,9 +127,9 @@ export const SingleTicket = () => {
       result.push(
         <FontAwesomeIcon
           key={'worktime'}
-          className="cursor-pointer1"
+          className="cursor-pointer"
           icon={faClock}
-          onClick={() => navigate(`/work-time/add`)}
+          onClick={() => navigate(`/work-time/add/${ticket.id}`)}
         />
       );
     }
