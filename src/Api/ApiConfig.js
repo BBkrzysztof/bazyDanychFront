@@ -10,12 +10,20 @@ const config = Axios.create({
   },
 });
 
-config.interceptors.request.use((config) => {
-  const token = JSON.parse(localStorage.getItem('user'));
-  if (token?.jwt) {
-    config.headers['Authorization'] = `Bearer ${token?.jwt}`; // Dodawanie tokena do nagłówka
+config.interceptors.request.use(
+  (config) => {
+    const token = JSON.parse(localStorage.getItem('user'));
+    if (token?.jwt) {
+      config.headers['Authorization'] = `Bearer ${token?.jwt}`; // Dodawanie tokena do nagłówka
+    }
+    return config;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('user');
+    }
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
 export default config;

@@ -1,6 +1,6 @@
 import { twMerge } from 'tailwind-merge';
 
-export const Pill = ({ children, pillStyle = 'purple' }) => {
+export const Pill = ({ additionalClasses, children, pillStyle = 'purple' }) => {
   const styles = {
     default:
       'bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded',
@@ -15,7 +15,11 @@ export const Pill = ({ children, pillStyle = 'purple' }) => {
 
   return (
     <span
-      className={twMerge(styles[pillStyle], ' text-center truncate max-w-32 ')}
+      className={twMerge(
+        styles[pillStyle],
+        ' text-center truncate max-w-32 ',
+        additionalClasses
+      )}
     >
       {children}
     </span>

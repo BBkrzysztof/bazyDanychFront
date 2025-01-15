@@ -69,19 +69,21 @@ export const Register = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            ({ setFieldValue, isSubmitting }) => {
+            ({ setFieldValue, isSubmitting, values }) => {
               return (
                 <Form className="flex flex-col h-full ">
                   <Input
                     type={'email'}
                     name={'email'}
                     label={'Email'}
+                    value={values.email}
                     onChange={(value) => setFieldValue('email', value)}
                   />
                   <Input
                     type={'password'}
                     name={'password'}
                     label={'Password'}
+                    value={values.email}
                     onChange={(value) => setFieldValue('password', value)}
                   />
                   <Button type="submit" disabled={!!isSubmitting}>

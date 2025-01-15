@@ -10,6 +10,8 @@ import { ToastContainer } from 'react-toastify';
 import Main from './Pages/Main';
 import Layout from './Layout/Layout';
 import SingleTicket from './Pages/SingleTicket';
+import CreateTicket from './Pages/CreateTicket';
+import EditTicket from './Pages/EditTicket';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Main />} />
             <Route path="/ticket/:id" element={<SingleTicket />} />
+            <Route path="/ticket/add" element={<CreateTicket />} />
+            <Route path="/ticket/edit/:id" element={<EditTicket />} />
 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

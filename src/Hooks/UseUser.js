@@ -30,7 +30,23 @@ export const useUser = () => {
 
   const isAuthenticated = useMemo(() => !!user, [user]);
 
-  return { user, isAuthenticated, login, logout };
+  /**
+   *
+   * @param {string[]}roles
+   */
+  const hasRole = (roles) => {
+    return roles.includes(user.role);
+  };
+
+  const result = { user, isAuthenticated, login, logout, hasRole };
+
+  return Object.assign(result, {
+    user,
+    isAuthenticated,
+    login,
+    logout,
+    hasRole,
+  });
 };
 
 export default useUser;

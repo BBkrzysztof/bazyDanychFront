@@ -15,11 +15,10 @@ export const CommentCard = ({
   createdAt,
   setComments,
 }) => {
-  const { user } = useUser();
+  const { user, hasRole } = useUser();
 
   const [isEditing, setIsEditing] = useState(false);
 
-  //@todo add edit comment if author === me or admin
   const [{ loading }, executeDelete] = useAxios(
     {
       url: `/api/comment/${id}`,
@@ -49,7 +48,8 @@ export const CommentCard = ({
           </span>
           <div className="flex gap-2 items-center">
             {user &&
-              (user?.role !== 'RoleUser' || user?.email === author.email) && (
+              (hasRole(['RoleAdmin', 'RoleEmployee']) ||
+                user?.email === author.email) && (
                 <>
                   <FontAwesomeIcon
                     className="cursor-pointer"
