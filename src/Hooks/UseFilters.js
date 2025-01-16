@@ -41,9 +41,22 @@ export const useFilters = (filtersTemplate) => {
     );
   }, [filtersTemplate, handleFilters]);
 
-  const result = { filtersComponent, filters };
+  const filtersArray = useMemo(() => {
+    return filtersTemplate.map(({ key, label }) => (
+      <Input
+        key={`filter-element-${key}`}
+        error={false}
+        name={key}
+        label={label}
+        type="text"
+        onChange={handleFilters(key)}
+      />
+    ));
+  }, [filtersTemplate, handleFilters]);
 
-  return Object.assign(result, { filtersComponent, filters });
+  const result = { filtersComponent, filtersArray, filters };
+
+  return Object.assign(result, { filtersComponent, filtersArray, filters });
 };
 
 export default useFilters;

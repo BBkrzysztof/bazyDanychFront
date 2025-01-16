@@ -8,19 +8,29 @@ import ErrorWrapper from '../Components/ErrorWrapper/ErrorWrapper';
 import { useNavigate } from 'react-router-dom';
 import config from '../Api/ApiConfig';
 import Table from '../Components/Table/Table';
+import useFilters from '../Hooks/UseFilters';
+import moment from 'moment/moment';
 
 export const WorkTime = () => {
   const [pages, setPages] = useState(1);
   const [isDeleting, setIsDeleting] = useState(false);
   const [workTimes, setWorkTimes] = useState([]);
+  const [firstLoading, setFirstLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const { currentPage, pagination } = usePaginate(pages);
 
+  const { filtersArray, filters } = useFilters([
+    { key: 'ticket', label: 'Ticket' },
+    { key: 'employee', label: 'User' },
+    { key: 'time', label: 'Hours' },
+    { key: 'createdAt', label: 'Date' },
+  ]);
+
   const [{ data, loading, error }] = useAxios({
     url: '/api/work-time/',
-    params: { limit: 25, page: currentPage },
+    params: { limit: 25, ...filters, page: currentPage },
   });
 
   useEffect(() => {
@@ -29,6 +39,9 @@ export const WorkTime = () => {
 
   useEffect(() => {
     setPages(data?.pages || 1);
+    if (data?.pages) {
+      setFirstLoading(false);
+    }
   }, [setPages, data]);
 
   const handleDelete = useCallback(async (id) => {
@@ -68,14 +81,20 @@ export const WorkTime = () => {
     <div className="flex justify-center p-10">
       <div className="p-5 w-2/3 border border-gray-500 rounded-md relative bg-[#f6f7f9] ">
         <ErrorWrapper error={error}>
-          <LoaderWrapper loading={loading || isDeleting}>
+          <LoaderWrapper loading={firstLoading || isDeleting}>
             <Table
+              filters={filtersArray}
               cols={[
-                { label: 'Tticket', key: 'ticket.id' },
+                { label: 'Ticket', key: 'ticket.id' },
                 { label: 'User', key: 'employee.email' },
-                { label: 'Date', key: 'createdAt.date' },
                 { label: 'Hours', key: 'hours' },
+                {
+                  label: 'Date',
+                  key: 'createdAt.date',
+                  renderer: (data) => moment(data).format('YYYY-MM-DD'),
+                },
               ]}
+              loading={loading}
               data={workTimes}
               paginate={pagination}
               renderActions={renderActions}

@@ -9,6 +9,7 @@ import TagForm from '../Froms/TagForm';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Table from '../Components/Table/Table';
 import config from '../Api/ApiConfig';
+import useFilters from '../Hooks/UseFilters';
 
 export const Tags = ({ mode = 'add' }) => {
   const navigate = useNavigate();
@@ -16,12 +17,18 @@ export const Tags = ({ mode = 'add' }) => {
   const [pages, setPages] = useState(1);
   const [isDeleting, setIsDeleting] = useState(false);
   const [tags, setTags] = useState([]);
+  const [firstLoading, setFirstLoading] = useState(false);
 
   const { currentPage, pagination } = usePaginate(pages);
 
+  const { filtersArray, filters } = useFilters([
+    { key: 'id', label: 'Id' },
+    { key: 'name', label: 'Name' },
+  ]);
+
   const [{ data, loading, error }] = useAxios({
     url: '/api/tag/',
-    params: { limit: 10, page: currentPage },
+    params: { limit: 10, ...filters, page: currentPage },
   });
 
   useEffect(() => {
@@ -30,6 +37,9 @@ export const Tags = ({ mode = 'add' }) => {
 
   useEffect(() => {
     setTags(data?.data || []);
+    if (data?.data) {
+      setFirstLoading(false);
+    }
   }, [data]);
 
   const [
@@ -84,7 +94,7 @@ export const Tags = ({ mode = 'add' }) => {
       <div className="border border-gray-500 p-5 w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
         <ErrorWrapper error={error || createEditTagError}>
           <LoaderWrapper
-            loading={loading || createEditTagLoading || isDeleting}
+            loading={firstLoading || createEditTagLoading || isDeleting}
           >
             <TagForm
               execute={createEditTagExecute}
@@ -93,10 +103,12 @@ export const Tags = ({ mode = 'add' }) => {
               tag={mode === 'edit' ? state : {}}
             />
             <Table
+              filters={filtersArray}
               cols={[
                 { label: 'Id', key: 'id' },
                 { label: 'Name', key: 'name' },
               ]}
+              loading={loading}
               data={tags || []}
               paginate={pagination}
               renderActions={renderActions}

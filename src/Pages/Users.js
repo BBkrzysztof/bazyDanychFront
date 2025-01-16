@@ -8,19 +8,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import config from '../Api/ApiConfig';
+import useFilters from '../Hooks/UseFilters';
 
 export const Users = () => {
   const [pages, setPages] = useState(1);
   const [users, setUsers] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [firstLoading, setFirstLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const { currentPage, pagination } = usePaginate(pages);
 
+  const { filtersArray, filters } = useFilters([
+    { key: 'id', label: 'Id' },
+    { key: 'email', label: 'Email' },
+    { key: 'role', label: 'Role' },
+  ]);
+
   const [{ data, loading, error }] = useAxios({
     url: '/api/user/',
-    params: { limit: 10, page: currentPage },
+    params: { limit: 10, ...filters, page: currentPage },
   });
 
   useEffect(() => {
@@ -29,6 +37,10 @@ export const Users = () => {
 
   useEffect(() => {
     setUsers(data?.data || []);
+
+    if (data?.data) {
+      setFirstLoading(false);
+    }
   }, [data]);
 
   const handleDelete = useCallback(async (id) => {
@@ -67,15 +79,17 @@ export const Users = () => {
     <div className="flex justify-center p-10 ">
       <div className="border border-gray-500 p-5 w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
         <ErrorWrapper error={error}>
-          <LoaderWrapper loading={loading || isDeleting}>
+          <LoaderWrapper loading={firstLoading || isDeleting}>
             <h6 className="mb-4">Users:</h6>
             <Table
+              filters={filtersArray}
               cols={[
                 { label: 'Id', key: 'id' },
                 { label: 'Email', key: 'email' },
                 { label: 'Role', key: 'role' },
               ]}
               data={users}
+              loading={loading}
               paginate={pagination}
               renderActions={renderActions}
             />
