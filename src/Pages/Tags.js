@@ -49,7 +49,7 @@ export const Tags = ({ mode = 'add' }) => {
 
   const handleDelete = useCallback(async (id) => {
     setIsDeleting(true);
-    await config.delete(`/api/work-time/${id}`);
+    await config.delete(`/api/tag/${id}`);
     setTags((prevState) =>
       [...prevState].filter((element) => element.id !== id)
     );
