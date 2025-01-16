@@ -6,12 +6,11 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ErrorWrapper from '../Components/ErrorWrapper/ErrorWrapper';
 import LoaderWrapper from '../Components/LoaderWrapper/LoaderWrapper';
 import TagForm from '../Froms/TagForm';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Table from '../Components/Table/Table';
 import config from '../Api/ApiConfig';
 
 export const Tags = ({ mode = 'add' }) => {
-  const { id } = useParams();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [pages, setPages] = useState(1);

@@ -32,6 +32,12 @@ export const Navbar = () => {
         roles: [],
       },
       {
+        url: '/profile',
+        label: 'Profile',
+        roles: [],
+        state: { user },
+      },
+      {
         url: '/users',
         label: 'Users',
         roles: ['RoleAdmin', 'RoleEmployee'],
@@ -52,7 +58,7 @@ export const Navbar = () => {
         roles: [],
       },
     ];
-  }, [isAuthenticated]);
+  }, [isAuthenticated, user]);
 
   const linkItemClassList = 'font-semibold text-gray-800 hover:underline';
 
@@ -81,6 +87,7 @@ export const Navbar = () => {
                 className={linkItemClassList}
                 to={item.url}
                 key={`menu-item-${item.label}`}
+                {...(item?.state !== undefined && { state: item.state })}
               >
                 {item.label}
               </Link>

@@ -16,6 +16,8 @@ import AddWorkTime from './Pages/AddWorkTime';
 import WorkTime from './Pages/WorkTime';
 import ProtectedRoleRoute from './Pages/ProtectedRoute/ProtectedRoleRoute';
 import Tags from './Pages/Tags';
+import Users from './Pages/Users';
+import EditUser from './Pages/EditUser';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
               <Route path="/logout" element={<Logout />} />
               <Route path="reset-password" element={<ResetPassword />} />
 
+              <Route path="/profile" element={<EditUser />} />
+
               <Route
                 element={
                   <ProtectedRoleRoute roles={['RoleAdmin', 'RoleEmployee']} />
@@ -55,6 +59,11 @@ function App() {
                 }
               >
                 <Route path="/tags/" element={<Tags />} />
+                <Route path="/users/" element={<Users />} />
+                <Route
+                  path="/users/edit/:id"
+                  element={<EditUser profile={false} />}
+                />
                 <Route path="/tags/edit/:id" element={<Tags mode="edit" />} />
               </Route>
             </Route>

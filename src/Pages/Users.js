@@ -1,40 +1,40 @@
+import ErrorWrapper from '../Components/ErrorWrapper/ErrorWrapper';
 import LoaderWrapper from '../Components/LoaderWrapper/LoaderWrapper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import Table from '../Components/Table/Table';
 import usePaginate from '../Hooks/UsePaginate';
 import useAxios from 'axios-hooks';
 import { useCallback, useEffect, useState } from 'react';
-import ErrorWrapper from '../Components/ErrorWrapper/ErrorWrapper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import config from '../Api/ApiConfig';
-import Table from '../Components/Table/Table';
 
-export const WorkTime = () => {
+export const Users = () => {
   const [pages, setPages] = useState(1);
+  const [users, setUsers] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [workTimes, setWorkTimes] = useState([]);
 
   const navigate = useNavigate();
 
   const { currentPage, pagination } = usePaginate(pages);
 
   const [{ data, loading, error }] = useAxios({
-    url: '/api/work-time/',
-    params: { limit: 25, page: currentPage },
+    url: '/api/user/',
+    params: { limit: 10, page: currentPage },
   });
-
-  useEffect(() => {
-    setWorkTimes(data?.data || []);
-  }, [data]);
 
   useEffect(() => {
     setPages(data?.pages || 1);
   }, [setPages, data]);
 
+  useEffect(() => {
+    setUsers(data?.data || []);
+  }, [data]);
+
   const handleDelete = useCallback(async (id) => {
     setIsDeleting(true);
-    await config.delete(`/api/work-time/${id}`);
-    setWorkTimes((prevState) =>
+    await config.delete(`/api/user/${id}`);
+    setUsers((prevState) =>
       [...prevState].filter((element) => element.id !== id)
     );
     setIsDeleting(false);
@@ -48,8 +48,8 @@ export const WorkTime = () => {
           icon={faPen}
           key={'edit'}
           onClick={() =>
-            navigate(`/work-time/edit/${element.id}`, {
-              state: element,
+            navigate(`/users/edit/${element.id}`, {
+              state: { user: element },
             })
           }
         />
@@ -63,20 +63,19 @@ export const WorkTime = () => {
     ),
     [handleDelete, navigate]
   );
-
   return (
-    <div className="flex justify-center p-10">
-      <div className="p-5 w-2/3 border border-gray-500 rounded-md relative bg-[#f6f7f9] ">
+    <div className="flex justify-center p-10 ">
+      <div className="border border-gray-500 p-5 w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
         <ErrorWrapper error={error}>
           <LoaderWrapper loading={loading || isDeleting}>
+            <h6 className="mb-4">Users:</h6>
             <Table
               cols={[
-                { label: 'Tticket', key: 'ticket.id' },
-                { label: 'User', key: 'employee.email' },
-                { label: 'Date', key: 'createdAt.date' },
-                { label: 'Hours', key: 'hours' },
+                { label: 'Id', key: 'id' },
+                { label: 'Email', key: 'email' },
+                { label: 'Role', key: 'role' },
               ]}
-              data={workTimes}
+              data={users}
               paginate={pagination}
               renderActions={renderActions}
             />
@@ -87,4 +86,4 @@ export const WorkTime = () => {
   );
 };
 
-export default WorkTime;
+export default Users;

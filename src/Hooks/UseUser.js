@@ -23,7 +23,7 @@ export const useUser = () => {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);
+  }, [navigate]);
 
   const logout = useCallback(() => {
     removeItem();
