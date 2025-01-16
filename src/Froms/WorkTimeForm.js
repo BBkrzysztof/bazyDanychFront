@@ -14,14 +14,12 @@ export const WorkTimeForm = ({
 }) => {
   const maxDate = moment().format('YYYY-MM-DD');
 
-  console.log(workTime);
-
   const initialValues = useMemo(
     () => ({
       createdAt:
         mode === 'add'
           ? ''
-          : moment(workTime.createdAt.date).format('YYYY-MM-DD'),
+          : moment(workTime.createdAt?.date).format('YYYY-MM-DD'),
       time: mode === 'add' ? '' : workTime.hours,
     }),
     [mode, workTime]

@@ -1,9 +1,29 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import config from '../Api/ApiConfig';
+import { useNavigate } from 'react-router-dom';
 
 export const useUser = () => {
   const [user, setUser, { removeItem }] = useLocalStorageState('user');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (
+        event.key === 'user' &&
+        event.oldValue !== null &&
+        event.newValue === null
+      ) {
+        navigate('/');
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const logout = useCallback(() => {
     removeItem();

@@ -34,18 +34,16 @@ export const Main = () => {
   }, [data]);
 
   return (
-    <div className="mx-auto w-2/3">
-      <div className="p-5 border border-gray-500 flex justify-center gap-2">
-        {filtersComponent}
-      </div>
+    <div className="mx-auto w-2/3 flex flex-col">
+      <div className="p-5 flex justify-center gap-2">{filtersComponent}</div>
       <ErrorWrapper error={error}>
         <LoaderWrapper loading={loading}>
           <div className="mx-auto w-2/3 h-max p-4 flex flex-col gap-2">
             {tickets}
           </div>
+          <div>{pagination}</div>
         </LoaderWrapper>
       </ErrorWrapper>
-      <div>{pagination}</div>
     </div>
   );
 };

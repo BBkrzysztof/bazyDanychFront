@@ -15,6 +15,7 @@ import EditTicket from './Pages/EditTicket';
 import AddWorkTime from './Pages/AddWorkTime';
 import WorkTime from './Pages/WorkTime';
 import ProtectedRoleRoute from './Pages/ProtectedRoute/ProtectedRoleRoute';
+import Tags from './Pages/Tags';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
               <Route path="/ticket/add" element={<CreateTicket />} />
               <Route path="/ticket/edit/:id" element={<EditTicket />} />
 
+              <Route path="/list" element={<Loader />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="reset-password" element={<ResetPassword />} />
+
               <Route
                 element={
                   <ProtectedRoleRoute roles={['RoleAdmin', 'RoleEmployee']} />
@@ -44,9 +49,14 @@ function App() {
                 />
               </Route>
 
-              <Route path="/list" element={<Loader />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route path="reset-password" element={<ResetPassword />} />
+              <Route
+                element={
+                  <ProtectedRoleRoute roles={['RoleAdmin', 'RoleEmployee']} />
+                }
+              >
+                <Route path="/tags/" element={<Tags />} />
+                <Route path="/tags/edit/:id" element={<Tags mode="edit" />} />
+              </Route>
             </Route>
 
             <Route path="*" element={<NotFound />} />
