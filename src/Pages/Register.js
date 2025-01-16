@@ -57,7 +57,7 @@ export const Register = () => {
 
   return (
     <div className="flex w-full h-[100vh] justify-center items-center bg-[#f3f4f7]">
-      <div className="w-1/4 p-5 h-[60vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
+      <div className="w-[90%] md:w-1/3 xl:w-1/4 p-5 h-[60vh] bg-white rounded-xl shadow-lg shadow-gray-50/200 flex items-center flex-col">
         <h5 className="">Create new account</h5>
         <span className="">Please enter your details to register</span>
 

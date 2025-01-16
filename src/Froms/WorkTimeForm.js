@@ -25,11 +25,16 @@ export const WorkTimeForm = ({
     [mode, workTime]
   );
 
+  console.log(initialValues);
+
   const validationSchema = Yup.object({
     createdAt: Yup.date()
       .max(new Date(maxDate), `Date cant be into the future`)
       .required('created At is required'),
-    time: Yup.number().min(0).max(24).required('Time is required'),
+    time: Yup.number('Field must be a number')
+      .min(0, 'Minum is 0')
+      .max(24, 'Maxumum is 24')
+      .required('Time is required'),
   });
 
   const submit = useCallback(

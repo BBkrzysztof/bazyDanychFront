@@ -242,7 +242,7 @@ export const SingleTicket = () => {
 
   return (
     <div className="flex justify-center p-10 ">
-      <div className="border border-gray-500 p-5 w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
+      <div className="border border-gray-500 p-5 w-full lg:w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
         <LoaderWrapper
           loading={
             !ticket ||
@@ -257,7 +257,7 @@ export const SingleTicket = () => {
               <div className="flex gap-3">
                 <FontAwesomeIcon icon={faTicket} className="w-10 h-10" />
                 <div className="flex flex-col gap-2 w-1/2">
-                  <h3 className="capitalize">{ticket.title}</h3>
+                  <h3 className="capitalize w-full">{ticket.title}</h3>
                   <span className="text-gray-600 font-semibold">
                     Added by: {ticket.author.email},
                     <Pill>{ticket.author.role}</Pill>
@@ -265,7 +265,7 @@ export const SingleTicket = () => {
                 </div>
                 <div className="flex justify-end w-full gap-5">{controls}</div>
               </div>
-              <div className="grid grid-cols-2 py-5 px-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 py-5 px-1">
                 <div className="flex gap-1 items-center">
                   <span className="text-gray-600 font-semibold">Tags: </span>
                   {ticket.tags?.map((tag) => (

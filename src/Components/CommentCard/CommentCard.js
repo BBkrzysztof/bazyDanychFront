@@ -43,7 +43,7 @@ export const CommentCard = ({
     <div className={twMerge('border border-gray-500 ', loading && 'p-1')}>
       <LoaderWrapper loading={loading}>
         <div className="p-1 border-b border-gray-500 flex justify-between bg-[#f3f4f7]">
-          <span className="text-gray-600 font-semibold">
+          <span className="text-gray-600 text-sm md:text-base font-semibold">
             Commented by: {author.email}
           </span>
           <div className="flex gap-2 items-center">
@@ -63,7 +63,7 @@ export const CommentCard = ({
                   />
                 </>
               )}
-            <span className="text-gray-600 font-semibold">
+            <span className="text-gray-600 font-semibold text-sm md:text-base">
               created: {moment(createdAt.date).format('Y-M-D')}
             </span>
           </div>

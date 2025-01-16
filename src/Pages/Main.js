@@ -34,11 +34,14 @@ export const Main = () => {
   }, [data]);
 
   return (
-    <div className="mx-auto w-2/3 flex flex-col">
-      <div className="p-5 flex justify-center gap-2">{filtersComponent}</div>
+    <div className="mx-auto w-full flex flex-col-reverse md:flex-col p-4 md:w-2/3">
+      <div className="p-5 mx-auto w-2/2 flex flex-col justify-center gap-2 md:flex-row md:w-full">
+        <span className="text-gray-600 font-semibold">Filters:</span>
+        {filtersComponent}
+      </div>
       <ErrorWrapper error={error}>
         <LoaderWrapper loading={loading}>
-          <div className="mx-auto w-2/3 h-max p-4 flex flex-col gap-2">
+          <div className="mx-auto w-full h-max p-4 flex flex-col gap-2 md:w-2/3">
             {tickets}
           </div>
           <div>{pagination}</div>

@@ -18,6 +18,7 @@ import ProtectedRoleRoute from './Pages/ProtectedRoute/ProtectedRoleRoute';
 import Tags from './Pages/Tags';
 import Users from './Pages/Users';
 import EditUser from './Pages/EditUser';
+import { Logs } from './Pages/Logs';
 
 function App() {
   return (
@@ -65,6 +66,9 @@ function App() {
                   element={<EditUser profile={false} />}
                 />
                 <Route path="/tags/edit/:id" element={<Tags mode="edit" />} />
+              </Route>
+              <Route element={<ProtectedRoleRoute roles={['RoleAdmin']} />}>
+                <Route path="/logs" element={<Logs />} />
               </Route>
             </Route>
 

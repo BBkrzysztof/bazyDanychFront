@@ -5,6 +5,7 @@ export const Input = ({
   name,
   type,
   label,
+  value = '',
   error = true,
   required = false,
   onChange = () => {},
@@ -21,6 +22,7 @@ export const Input = ({
         onChange={(event) => onChange(event.target.value)}
         placeholder={label}
         required={required}
+        {...(value !== '' && { value: value })}
         {...props}
       />
 

@@ -53,6 +53,11 @@ export const Navbar = () => {
         roles: ['RoleAdmin', 'RoleEmployee'],
       },
       {
+        url: '/logs',
+        label: 'Logs',
+        roles: ['RoleAdmin'],
+      },
+      {
         url: '/logout',
         label: 'Logout',
         roles: [],

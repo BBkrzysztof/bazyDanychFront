@@ -79,7 +79,7 @@ export const WorkTime = () => {
 
   return (
     <div className="flex justify-center p-10">
-      <div className="p-5 w-2/3 border border-gray-500 rounded-md relative bg-[#f6f7f9] ">
+      <div className="p-5  w-full lg:w-2/3 border border-gray-500 rounded-md relative bg-[#f6f7f9] ">
         <ErrorWrapper error={error}>
           <LoaderWrapper loading={firstLoading || isDeleting}>
             <Table

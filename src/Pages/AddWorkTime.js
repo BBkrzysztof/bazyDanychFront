@@ -81,7 +81,7 @@ export const AddWorkTime = ({ mode = 'add' }) => {
   );
   return (
     <div className="flex justify-center p-10 ">
-      <div className="border border-gray-500 p-5 w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
+      <div className="border border-gray-500 p-5 w-full lg:w-2/3 rounded-md relative bg-[#f6f7f9] min-h-[600px]">
         <LoaderWrapper
           loading={loading || isDeleting || createEditWorkTimeLoading}
         >
